@@ -38,7 +38,27 @@ contract Voting {
         }    
     }
 
+    // function for voting on a proposal by the voter
     function vote(uint proposal) public {
         Voter storage sender = voters[msg.sender]; // storing the details of the sender
+        require(!sender.voted, "Already voted."); // checking if the sender has already voted
+        sender.voted = true; // setting the voted status of the sender to true
+        sender.vote = proposal; // storing the vote of the sender
+        proposals[proposal].voteCount += 1; // incrementing the vote count of the proposal
+    }
+
+    function winningProposal() public view returns (uint winning_proposal) {
+        uint winningVoteCount = 0; // initializing the winning vote count to 0
+        for (uint p=0; p<proposals.length; p++){ // loop to iterate over the proposals
+            if (proposals[p].voteCount > winningVoteCount) { // checking if the vote count of the proposal is greater than the winning vote count
+                winningVoteCount = proposals[p].voteCount; // updating the winning vote count
+                winning_proposal = p; // updating the winning proposal
+            }
+        }
+    }
+
+    // function to get the name of the winning proposal
+    function winningProposalName() public view returns (string memory winning_proposal_name) {
+        winning_proposal_name = proposals[winningProposal()].name_of_proposal; // getting the name of the winning proposal
     }
 }
