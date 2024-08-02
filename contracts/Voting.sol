@@ -11,6 +11,7 @@ contract Voting {
     struct Voter {
         bool voted; // boolean to check if the voter has voted or not
         uint vote; // uint to store the vote of the voter
+        uint weight; // uint to store the weight of the voter (the right to vote)
     }
 
     // declaring a struct named Proposal for storing the details of the proposal to be voted on
@@ -26,7 +27,7 @@ contract Voting {
     // constructor to initialize the chairperson
     constructor(string[] memory proposalNames) {
         chairperson = msg.sender; // initializing the chairperson with the address of the sender
-        voters[chairperson].voted = false; // setting the voted status of the chairperson to false
+        voters[chairperson].weight = 1; // giving the right to vote to the chairperson
 
         // loop to add the proposals to the proposals array
         for (uint i=0; i<proposalNames.length; i++) {
@@ -38,13 +39,22 @@ contract Voting {
         }    
     }
 
+    // function to give the right to vote to the voter
+    function giveRightToVote(address voter) public {
+        require(msg.sender == chairperson, "Only chairperson can give right to vote."); // checking if the sender is the chairperson
+        require(!voters[voter].voted, "The voter has already voted."); // checking if the voter has already voted
+        require(voters[voter].weight == 0, "The voter already has the right to vote."); // checking if the voter already has the right to vote
+        voters[voter].weight = 1; // giving the right to vote to the voter
+    }
+
     // function for voting on a proposal by the voter
     function vote(uint proposal) public {
         Voter storage sender = voters[msg.sender]; // storing the details of the sender
+        require(sender.weight != 0, "Has no right to vote."); // checking if the sender has the right to vote
         require(!sender.voted, "Already voted."); // checking if the sender has already voted
         sender.voted = true; // setting the voted status of the sender to true
         sender.vote = proposal; // storing the vote of the sender
-        proposals[proposal].voteCount += 1; // incrementing the vote count of the proposal
+        proposals[proposal].voteCount += sender.weight; // incrementing the vote count of the proposal according to the weight of the sender
     }
 
     function winningProposal() public view returns (uint winning_proposal) {
