@@ -1,1 +1,14 @@
-build/
+build
+voting-dapp-frontend/node_modules
+voting-dapp-frontend/.pnp
+voting-dapp-frontend/.pnp.js
+voting-dapp-frontend/coverage/
+voting-dapp-frontend/build/
+voting-dapp-frontend/.DS_Store
+voting-dapp-frontend/.env.local
+voting-dapp-frontend/.env.development.local
+voting-dapp-frontend/.env.test.local
+voting-dapp-frontend/.env.production.local
+voting-dapp-frontend/npm-debug.log*
+voting-dapp-frontend/yarn-debug.log*
+voting-dapp-frontend/yarn-error.log*
