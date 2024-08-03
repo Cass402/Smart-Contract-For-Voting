@@ -8,7 +8,13 @@
 const Voting = artifacts.require("Voting");
 
 // Export the migration function
-module.exports = function (deployer) {
-  const proposals = ["Proposal 1", "Proposal 2", "Proposal 3"]; // Define the proposals
-  deployer.deploy(Voting, proposals); // Deploy the Voting contract with the proposals as arguments
+module.exports = async function (deployer) {
+  const proposals = ["Proposal 1", "Proposal 2", "Proposal 3"]; // Define the proposals for the smart contract
+  try {
+    // Use try...catch to handle errors
+    // Deploy the Voting contract
+    await deployer.deploy(Voting, proposals);
+  } catch (error) {
+    console.error("Error in migration: ", error); // Log an error if it occurs
+  }
 };
