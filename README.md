@@ -57,7 +57,7 @@ The Voting contract is written with Voter and Proposal structs. Each voter needs
 
 ## Frontend
 
-The frontend for this project is located in the voting-dapp-frontend directory. It is built using Create React App.
+The frontend for this project is located in the voting-dapp-frontend directory. It is built using Create React App. The frontend uses the ethers.js framework to help connect the deployed smart contract on the blockchain to the frontend.
 
 ### Available Scripts
 
