@@ -71,4 +71,9 @@ contract Voting {
     function winningProposalName() public view returns (string memory winning_proposal_name) {
         winning_proposal_name = proposals[winningProposal()].name_of_proposal; // getting the name of the winning proposal
     }
+
+    // function to get the proposals of the voting
+    function getProposals(uint i) public view returns (Proposal memory) {
+        return proposals[i]; // returning the proposal at the given index
+    }
 }
